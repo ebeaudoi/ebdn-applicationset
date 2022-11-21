@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: guestbook
+spec:
+  generators:
+  - list:
+      # Parameters are generated based on this cluster list, to be
+      # substituted into the template below.
+      elements: 
+      - cluster: engineering-dev
+        url: https://1.2.3.4 # faux cluster URLs
+      - cluster: engineering-prod
+        url: https://2.4.6.8
+      - cluster: finance-preprod
+        url: https://9.8.7.6
+
+  # 'template' is an Argo CD Application template, with support 
+  # for parameter substitution using parameters generated above.
+  template: 
+    metadata:
+      # The 'cluster' parameter from above is substituted here
+      name: '{{cluster}}-guestbook'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/argoproj-labs/applicationset.git
+        targetRevision: HEAD
+        # 'cluster' name is also substituted here
+        path: examples/list-generator/guestbook/{{cluster}}
+      destination:
+        # The cluster 'url', used by Argo CD to access the cluster, is 
+        # substituted here.
+        server: '{{url}}'
+        namespace: guestbook
