@@ -9,11 +9,11 @@ spec:
       # substituted into the template below.
       elements: 
       - cluster: engineering-dev
-        url: https://1.2.3.4 # faux cluster URLs
-      - cluster: engineering-prod
-        url: https://2.4.6.8
-      - cluster: finance-preprod
-        url: https://9.8.7.6
+        url: https://api.ebdnocp4ipi.vmware.tamlab.rdu2.redhat.com:6443
+#      - cluster: engineering-prod
+#        url: https://2.4.6.8
+#      - cluster: finance-preprod
+#        url: https://9.8.7.6
 
   # 'template' is an Argo CD Application template, with support 
   # for parameter substitution using parameters generated above.
